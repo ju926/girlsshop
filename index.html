@@ -5,173 +5,63 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Beauty Box Co</title>
 <style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  scroll-behavior: smooth;
-  background: #fff0f5;
-  overflow-x: hidden;
-}
-
-/* LANDING PAGE */
-.landing {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #000000, #4b004b, #ff1493);
-  color: white;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.logo {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 40px rgba(255,20,147,0.9);
-  margin-bottom: 25px;
-  transition: transform 0.6s ease, box-shadow 0.6s ease;
-  animation: float 4s ease-in-out infinite;
-  position: relative;
-  z-index: 2;
-}
-.logo:hover {
-  transform: scale(1.15) rotate(-5deg);
-  box-shadow: 0 0 60px rgba(255,20,147,1);
-}
-
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
-}
-
-.brand {
-  font-size: 32px;
-  font-weight: 900;
-  margin-bottom: 15px;
-  letter-spacing: 3px;
-  text-shadow: 0 3px 12px rgba(0,0,0,0.6);
-  background: linear-gradient(90deg, #ff1493, #ff69b4);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  position: relative;
-  z-index: 2;
-}
-
-.desc {
-  max-width: 350px;
-  font-size: 18px;
-  line-height: 1.6;
-  font-weight: 500;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-  margin-bottom: 30px;
-  position: relative;
-  z-index: 2;
-}
-
-.scroll {
-  position: absolute;
-  bottom: 20px;
-  font-size: 16px;
-  opacity: 0.85;
-  cursor: pointer;
-  animation: bounce 1.5s infinite;
-  color: #ff69b4;
-  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
-  z-index: 2;
-}
-@keyframes bounce {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(10px); }
-}
-
-/* SPARKLES */
-.sparkle {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: white;
-  border-radius: 50%;
-  opacity: 0.8;
-  box-shadow: 0 0 10px white;
-  animation: sparkleAnim 3s infinite;
-  pointer-events: none;
-}
-@keyframes sparkleAnim {
-  0% { transform: translate(0,0) scale(1); opacity:0.8; }
-  50% { transform: translate(calc(var(--x) * 1px), calc(var(--y) * 1px)) scale(1.5); opacity:0; }
-  100% { transform: translate(0,0) scale(1); opacity:0.8; }
-}
-
-/* PINS STYLE */
-.pins::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: url('https://i.pinimg.com/originals/96/ea/5d/96ea5d92b46f29e891c12ee2b915e1de.jpg') center/cover no-repeat;
-  filter: blur(35px) brightness(0.4);
-  z-index: 1;
-}
-
-/* SHOP PLACEHOLDER */
-#shop {
-  min-height: 100vh;
-  background: #fff0f5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#shop h2 {
-  color: #ff1493;
-  font-size: 36px;
-  letter-spacing: 2px;
-  font-weight: bold;
-}
+body { margin:0; font-family:'Segoe UI', sans-serif; scroll-behavior:smooth; background:#fff0f5; }
+.landing { height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; background:linear-gradient(135deg,#000000,#4b004b,#ff1493); color:white; text-align:center; position:relative; overflow:hidden; }
+.logo { width:160px; height:160px; border-radius:50%; object-fit:cover; box-shadow:0 0 40px rgba(255,20,147,0.9); margin-bottom:25px; animation: float 4s ease-in-out infinite; position:relative; z-index:3; }
+@keyframes float { 0%,100%{transform:translateY(0);}50%{transform:translateY(-15px);} }
+.brand { font-size:32px; font-weight:900; margin-bottom:15px; letter-spacing:3px; text-shadow:0 3px 12px rgba(0,0,0,0.6); background:linear-gradient(90deg,#ff1493,#ff69b4); -webkit-background-clip:text; -webkit-text-fill-color:transparent; z-index:3; position:relative;}
+.desc { max-width:350px; font-size:18px; line-height:1.6; font-weight:500; text-shadow:0 2px 8px rgba(0,0,0,0.5); margin-bottom:30px; position:relative; z-index:3; }
+.scroll { position:absolute; bottom:20px; font-size:16px; cursor:pointer; animation:bounce 1.5s infinite; color:#ff69b4; text-shadow:0 1px 6px rgba(0,0,0,0.5); z-index:3; }
+@keyframes bounce {0%,100%{transform:translateY(0);}50%{transform:translateY(10px);} }
+.orbiting-product { width:80px; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:2; pointer-events:none; }
+.pins::before { content:''; position:absolute; width:100%; height:100%; background:url('https://i.pinimg.com/originals/96/ea/5d/96ea5d92b46f29e891c12ee2b915e1de.jpg') center/cover no-repeat; filter:blur(35px) brightness(0.4); z-index:1;}
+#shop { min-height:100vh; display:flex; justify-content:center; align-items:center; background:#fff0f5; }
+#shop h2 { color:#ff1493; font-size:36px; letter-spacing:2px; font-weight:bold; }
 </style>
 </head>
 <body>
 
-<!-- LANDING -->
 <section class="landing pins" id="landing">
   <img src="logo.png" class="logo" alt="Beauty Box Co Logo">
   <div class="brand">✨ BEAUTY BOX CO ✨</div>
-  <div class="desc">
-    Curated beauty for queens. Shine with elegance, confidence, and power in every product you love.
-  </div>
+  <div class="desc">Curated beauty for queens. Shine with elegance, confidence, and power in every product you love.</div>
   <div class="scroll" onclick="scrollToShop()">Scroll ↓</div>
+
+  <img src="lipstick1.png" class="orbiting-product" id="prod1">
+  <img src="perfume1.png" class="orbiting-product" id="prod2">
+  <img src="foundation1.png" class="orbiting-product" id="prod3">
 </section>
 
-<!-- SPARKLES GENERATED BY JS -->
-<script>
-function createSparkles(count=20){
-  const landing = document.getElementById('landing');
-  for(let i=0;i<count;i++){
-    const s = document.createElement('div');
-    s.classList.add('sparkle');
-    s.style.left = Math.random()*100+'%';
-    s.style.top = Math.random()*100+'%';
-    s.style.setProperty('--x', (Math.random()*50-25).toFixed(2));
-    s.style.setProperty('--y', (Math.random()*50-25).toFixed(2));
-    s.style.animationDuration = (Math.random()*2 + 2)+'s';
-    landing.appendChild(s);
-  }
-}
-createSparkles();
-
-function scrollToShop(){
-  document.getElementById('shop').scrollIntoView({behavior:'smooth'});
-}
-</script>
-
-<!-- SHOP PLACEHOLDER -->
 <section id="shop">
   <h2>Your Beauty Shop Awaits 👑</h2>
 </section>
+
+<script>
+// Scroll
+function scrollToShop(){ document.getElementById('shop').scrollIntoView({behavior:'smooth'}); }
+
+// Orbiting animation
+const products = [
+  {el:document.getElementById('prod1'), radius:120, speed:0.02, angle:0},
+  {el:document.getElementById('prod2'), radius:150, speed:0.015, angle:120},
+  {el:document.getElementById('prod3'), radius:100, speed:0.025, angle:240},
+];
+
+function animateOrbit(){
+  const centerX = window.innerWidth/2;
+  const centerY = window.innerHeight/2;
+  products.forEach(p=>{
+    const rad = p.angle * Math.PI/180;
+    const x = centerX + p.radius * Math.cos(rad) - 40; // 40 = half width
+    const y = centerY + p.radius * Math.sin(rad) - 40;
+    p.el.style.left = x+'px';
+    p.el.style.top = y+'px';
+    p.angle += p.speed*360;
+  });
+  requestAnimationFrame(animateOrbit);
+}
+animateOrbit();
+</script>
 
 </body>
 </html>
