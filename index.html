@@ -40,11 +40,11 @@ body { margin:0; font-family:'Segoe UI', sans-serif; scroll-behavior:smooth; bac
 // Scroll
 function scrollToShop(){ document.getElementById('shop').scrollIntoView({behavior:'smooth'}); }
 
-// Orbiting animation
+// Orbiting animation with slower speed and larger radii
 const products = [
-  {el:document.getElementById('prod1'), radius:120, speed:0.02, angle:0},
-  {el:document.getElementById('prod2'), radius:150, speed:0.015, angle:120},
-  {el:document.getElementById('prod3'), radius:100, speed:0.025, angle:240},
+  {el:document.getElementById('prod1'), radius:220, speed:0.005, angle:0},
+  {el:document.getElementById('prod2'), radius:250, speed:0.003, angle:120},
+  {el:document.getElementById('prod3'), radius:200, speed:0.004, angle:240},
 ];
 
 function animateOrbit(){
