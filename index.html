@@ -3,7 +3,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GlowHer Beauty</title><style>
-body {margin:0;font-family:Arial, sans-serif;scroll-behavior:smooth;}
+body {margin:0;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;scroll-behavior:smooth;}
 
 /* LANDING PAGE */
 .landing {
@@ -15,29 +15,37 @@ body {margin:0;font-family:Arial, sans-serif;scroll-behavior:smooth;}
   background: linear-gradient(135deg, #000000, #4b004b, #ff1493);
   color:white;
   text-align:center;
+  position:relative;
+  overflow:hidden;
 }
 
 .logo {
-  width:140px;
-  height:140px;
+  width:160px;
+  height:160px;
   border-radius:50%;
   object-fit:cover;
-  box-shadow:0 0 25px rgba(255,20,147,0.8);
-  margin-bottom:20px;
+  box-shadow:0 0 35px rgba(255,20,147,0.8);
+  margin-bottom:25px;
+  transition: transform 0.6s ease;
 }
-
-.desc {
-  max-width:300px;
-  font-size:16px;
-  line-height:1.5;
-  font-weight:500;
+.logo:hover {
+  transform: scale(1.1);
 }
 
 .brand {
-  font-size:22px;
+  font-size:28px;
   font-weight:bold;
-  margin-bottom:10px;
+  margin-bottom:15px;
   letter-spacing:2px;
+  text-shadow:0 2px 8px rgba(0,0,0,0.4);
+}
+
+.desc {
+  max-width:320px;
+  font-size:18px;
+  line-height:1.5;
+  font-weight:500;
+  text-shadow:0 1px 6px rgba(0,0,0,0.4);
 }
 
 .scroll {
@@ -45,39 +53,36 @@ body {margin:0;font-family:Arial, sans-serif;scroll-behavior:smooth;}
   bottom:20px;
   font-size:14px;
   opacity:0.8;
+  cursor:pointer;
   animation: bounce 1.5s infinite;
 }
-
 @keyframes bounce {
   0%,100% { transform: translateY(0); }
   50% { transform: translateY(8px); }
 }
 
-/* SHOP SECTION */
-.shop {background:#fff0f5;padding:20px;}
-.section h2 {color:#ff1493;text-align:center;}
-.products {display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:15px;}
-.card {background:white;padding:10px;border-radius:12px;box-shadow:0 3px 10px rgba(0,0,0,0.1);text-align:center;}
-.card img {width:100%;height:140px;object-fit:cover;border-radius:10px;}
-.buy {margin-top:8px;padding:8px;border:none;border-radius:6px;background:#ff1493;color:white;cursor:pointer;}
-
-footer {text-align:center;padding:15px;background:#ff1493;color:white;margin-top:20px;}
-</style></head><body><!-- LANDING --><section class="landing">
+/* PINS STYLE (Pinterest-like) */
+.pins::before {
+  content:'';
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:url('https://i.pinimg.com/originals/96/ea/5d/96ea5d92b46f29e891c12ee2b915e1de.jpg') center/cover no-repeat;
+  filter: blur(35px) brightness(0.4);
+  z-index:-1;
+}
+</style></head><body><!-- LANDING --><section class="landing pins" id="landing">
   <div class="brand">👑 GLOWHER BEAUTY</div>
   <img src="logo.png" class="logo">
   <div class="desc">
     Luxury beauty for queens. Glow with confidence, elegance, and power in every product you use.
   </div>
-  <div class="scroll">Scroll ↓</div>
-</section><!-- SHOP --><section class="shop"><div class="section">
-<h2>Beauty Collection 👑</h2>
-<div class="products">
-<div class="card"><img src="lipstick.jpg"><p>Luxury Lipstick</p><p>Ksh 500</p><button class="buy" onclick="order('Luxury Lipstick')">Buy Now</button></div>
-<div class="card"><img src="foundation.jpg"><p>Queen Foundation</p><p>Ksh 1200</p><button class="buy" onclick="order('Queen Foundation')">Buy Now</button></div>
-</div>
-</div></section><footer>
-<p>© 2026 GlowHer Beauty 👑</p>
-</footer><script>
-function order(product){let phone="254746496906";let message="Hello Queen 👑, I want to order: "+product;let url="https://wa.me/"+phone+"?text="+encodeURIComponent(message);window.open(url,'_blank');}
+  <div class="scroll" onclick="scrollToShop()">Scroll ↓</div>
+</section><!-- SHOP PLACEHOLDER --><section id="shop" style="min-height:100vh;background:#fff0f5;display:flex;justify-content:center;align-items:center;">
+  <h2 style="color:#ff1493;font-size:32px;">Your Beauty Shop Here 👑</h2>
+</section><script>
+function scrollToShop(){
+  document.getElementById('shop').scrollIntoView({behavior:'smooth'});
+}
 </script></body>
 </html>
