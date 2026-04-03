@@ -1,88 +1,129 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GlowHer Beauty</title><style>
-body {margin:0;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;scroll-behavior:smooth;}
+<title>Beauty Box Co</title>
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  scroll-behavior: smooth;
+  background: #fff0f5;
+}
 
 /* LANDING PAGE */
 .landing {
-  height:100vh;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background: linear-gradient(135deg, #000000, #4b004b, #ff1493);
-  color:white;
-  text-align:center;
-  position:relative;
-  overflow:hidden;
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .logo {
-  width:160px;
-  height:160px;
-  border-radius:50%;
-  object-fit:cover;
-  box-shadow:0 0 35px rgba(255,20,147,0.8);
-  margin-bottom:25px;
-  transition: transform 0.6s ease;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 40px rgba(255,20,147,0.9);
+  margin-bottom: 25px;
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
 }
 .logo:hover {
-  transform: scale(1.1);
+  transform: scale(1.15) rotate(-5deg);
+  box-shadow: 0 0 60px rgba(255,20,147,1);
 }
 
 .brand {
-  font-size:28px;
-  font-weight:bold;
-  margin-bottom:15px;
-  letter-spacing:2px;
-  text-shadow:0 2px 8px rgba(0,0,0,0.4);
+  font-size: 32px;
+  font-weight: 900;
+  margin-bottom: 15px;
+  letter-spacing: 3px;
+  text-shadow: 0 3px 12px rgba(0,0,0,0.6);
+  background: linear-gradient(90deg, #ff1493, #ff69b4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .desc {
-  max-width:320px;
-  font-size:18px;
-  line-height:1.5;
-  font-weight:500;
-  text-shadow:0 1px 6px rgba(0,0,0,0.4);
+  max-width: 350px;
+  font-size: 18px;
+  line-height: 1.6;
+  font-weight: 500;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  margin-bottom: 30px;
 }
 
 .scroll {
-  position:absolute;
-  bottom:20px;
-  font-size:14px;
-  opacity:0.8;
-  cursor:pointer;
+  position: absolute;
+  bottom: 20px;
+  font-size: 16px;
+  opacity: 0.85;
+  cursor: pointer;
   animation: bounce 1.5s infinite;
+  color: #ff69b4;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
 }
 @keyframes bounce {
   0%,100% { transform: translateY(0); }
-  50% { transform: translateY(8px); }
+  50% { transform: translateY(10px); }
 }
 
 /* PINS STYLE (Pinterest-like) */
 .pins::before {
-  content:'';
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:url('https://i.pinimg.com/originals/96/ea/5d/96ea5d92b46f29e891c12ee2b915e1de.jpg') center/cover no-repeat;
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url('https://i.pinimg.com/originals/96/ea/5d/96ea5d92b46f29e891c12ee2b915e1de.jpg') center/cover no-repeat;
   filter: blur(35px) brightness(0.4);
-  z-index:-1;
+  z-index: -1;
 }
-</style></head><body><!-- LANDING --><section class="landing pins" id="landing">
-  <div class="brand">👑 GLOWHER BEAUTY</div>
-  <img src="logo.png" class="logo">
+
+/* SHOP PLACEHOLDER */
+#shop {
+  min-height: 100vh;
+  background: #fff0f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#shop h2 {
+  color: #ff1493;
+  font-size: 36px;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<!-- LANDING -->
+<section class="landing pins" id="landing">
+  <img src="logo.png" class="logo" alt="Beauty Box Co Logo">
+  <div class="brand">✨ BEAUTY BOX CO ✨</div>
   <div class="desc">
-    Luxury beauty for queens. Glow with confidence, elegance, and power in every product you use.
+    Curated beauty for queens. Shine with elegance, confidence, and power in every product you love.
   </div>
   <div class="scroll" onclick="scrollToShop()">Scroll ↓</div>
-</section><!-- SHOP PLACEHOLDER --><section id="shop" style="min-height:100vh;background:#fff0f5;display:flex;justify-content:center;align-items:center;">
-  <h2 style="color:#ff1493;font-size:32px;">Your Beauty Shop Here 👑</h2>
-</section><script>
+</section>
+
+<!-- SHOP PLACEHOLDER -->
+<section id="shop">
+  <h2>Your Beauty Shop Awaits 👑</h2>
+</section>
+
+<script>
 function scrollToShop(){
   document.getElementById('shop').scrollIntoView({behavior:'smooth'});
 }
-</script></body>
+</script>
+
+</body>
 </html>
