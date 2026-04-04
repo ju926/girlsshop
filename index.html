@@ -4,13 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Beauty Box Co</title>
+
 <style>
 body { 
   margin:0; 
   font-family:'Segoe UI', sans-serif; 
-  scroll-behavior:smooth; 
   background:#fff0f5; 
   overflow-x:hidden; 
+  opacity:1;
+  transition: opacity 0.6s ease;
+}
+
+/* Fade out */
+body.fade-out {
+  opacity:0;
 }
 
 /* LANDING PAGE */
@@ -44,7 +51,7 @@ body {
   50%{transform:translateY(-15px);} 
 }
 
-/* Brand text */
+/* Brand */
 .brand { 
   font-size:32px; 
   font-weight:900; 
@@ -55,7 +62,6 @@ body {
   -webkit-background-clip:text; 
   -webkit-text-fill-color:transparent; 
   z-index:3; 
-  position:relative;
 }
 
 /* Description */
@@ -66,11 +72,10 @@ body {
   font-weight:500; 
   text-shadow:0 2px 8px rgba(0,0,0,0.5); 
   margin-bottom:30px; 
-  position:relative; 
   z-index:3; 
 }
 
-/* Scroll indicator */
+/* Button */
 .scroll { 
   position:absolute; 
   bottom:20px; 
@@ -78,15 +83,15 @@ body {
   cursor:pointer; 
   animation:bounce 1.5s infinite; 
   color:#ff69b4; 
-  text-shadow:0 1px 6px rgba(0,0,0,0.5); 
-  z-index:3; 
+  text-decoration:none;
+  font-weight:bold;
 }
 @keyframes bounce { 
   0%,100%{transform:translateY(0);} 
   50%{transform:translateY(10px);} 
 }
 
-/* PINS STYLE (background) */
+/* Background blur */
 .pins::before { 
   content:''; 
   position:absolute; 
@@ -96,32 +101,31 @@ body {
   filter:blur(35px) brightness(0.4); 
   z-index:1; 
 }
-
-/* SHOP SECTION */
-#shop { 
-  min-height:100vh; 
-  background:#fff0f5; 
-}
 </style>
 </head>
+
 <body>
 
 <!-- LANDING -->
-<section class="landing pins" id="landing">
+<section class="landing pins">
   <img src="logo.png" class="logo" alt="Beauty Box Co Logo">
   <div class="brand">✨ BEAUTY BOX CO ✨</div>
-  <div class="desc">Curated beauty for queens. Shine with elegance, confidence, and power in every product you love.</div>
-  <div class="scroll" onclick="scrollToShop()">Scroll ↓</div>
-</section>
+  <div class="desc">
+    Curated beauty for queens. Shine with elegance, confidence, and power in every product you love.
+  </div>
 
-<!-- SHOP PLACEHOLDER -->
-<section id="shop">
-  <!-- Empty section for product page -->
+  <!-- FIXED BUTTON -->
+  <a href="product.html" class="scroll" onclick="fadeAndGo(event)">Shop Now ↓</a>
 </section>
 
 <script>
-function scrollToShop(){
-  document.getElementById('shop').scrollIntoView({behavior:'smooth'});
+function fadeAndGo(e){
+  e.preventDefault(); // stop instant jump
+  document.body.classList.add("fade-out");
+
+  setTimeout(() => {
+    window.location.href = "product.html";
+  }, 600);
 }
 </script>
 
