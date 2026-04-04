@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beauty Box Co - Beauty Products</title>
+<style>
+body {
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  background:#fff0f5;
+  color:#000;
+}
+header {
+  background:#ff1493;
+  color:white;
+  padding:10px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+header h1 { margin:0; }
+nav ul { list-style:none; display:flex; margin:0; padding:0; }
+nav ul li { margin:0 10px; position:relative; }
+nav ul li a { color:white; text-decoration:none; font-weight:600; }
+nav ul li ul {
+  position:absolute; top:100%; left:0;
+  background:#ff69b4; display:none; flex-direction:column; padding:0; border-radius:5px;
+}
+nav ul li:hover ul { display:flex; }
+nav ul li ul li { margin:0; padding:8px 12px; }
+
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:20px; padding:20px; }
+.product { text-align:center; border-radius:15px; transition:transform 0.3s, box-shadow 0.3s; background:white; padding:10px; }
+.product img { width:100%; border-radius:15px; box-shadow:0 4px 15px rgba(255,20,147,0.4); transition:0.3s; }
+.product:hover img { transform:scale(1.05); box-shadow:0 8px 25px rgba(255,20,147,0.6); }
+button { margin-top:5px; padding:6px 10px; background:#ff1493; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:600; }
+
+#cart { position:fixed; right:10px; top:60px; background:white; border:2px solid #ff1493; padding:15px; border-radius:10px; max-width:250px; display:none; z-index:1001; }
+#cart h3 { margin-top:0; color:#ff1493; }
+#checkoutForm { display:none; flex-direction:column; margin-top:10px; }
+#checkoutForm input { margin-bottom:10px; padding:5px; border-radius:5px; border:1px solid #ccc; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Beauty Box Co</h1>
+  <nav>
+    <ul>
+      <li><a href="index.html">HOME</a></li>
+      <li>
+        <a href="#">SHOP</a>
+        <ul>
+          <li><a href="beauty.html">Beauty</a></li>
+          <li><a href="hair.html">Hair</a></li>
+          <li><a href="body.html">Body</a></li>
+          <li><a href="fitness.html">Fitness</a></li>
+          <li><a href="accessories.html">Accessories</a></li>
+        </ul>
+      </li>
+      <li><a href="#" onclick="toggleCart()">CART</a></li>
+      <li><a href="contact.html">CONTACT</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <h2 style="text-align:center;color:#ff1493;">Beauty Products</h2>
+  <div class="grid" id="beautyGrid"></div>
+</main>
+
+<!-- Cart -->
+<div id="cart">
+  <h3>Cart</h3>
+  <div id="cartItems"></div>
+  <button onclick="showCheckout()">Checkout</button>
+
+  <div id="checkoutForm">
+    <input type="text" id="customerName" placeholder="Full Name" required>
+    <input type="text" id="customerID" placeholder="ID / Identity Number" required>
+    <button onclick="submitOrder()">Submit Order</button>
+  </div>
+</div>
+
+<script>
+const beautyProducts = [
+  {name:"Lipgloss Pink", desc:"Shiny pink lipgloss for all occasions", price:"$10", img:"lipgloss1.png"},
+  {name:"Lipgloss Red", desc:"Vibrant red gloss", price:"$12", img:"lipgloss2.png"},
+  {name:"Lipgloss Nude", desc:"Subtle nude gloss", price:"$11", img:"lipgloss3.png"},
+  {name:"Lipgloss Sparkle", desc:"Sparkling pink lipgloss", price:"$13", img:"lipgloss5.png"},
+  {name:"Perfume Rose", desc:"Rose fragrance perfume", price:"$25", img:"perfume1.png"},
+  {name:"Perfume Vanilla", desc:"Vanilla scented perfume", price:"$28", img:"perfume2.png"},
+  {name:"Perfume Jasmine", desc:"Jasmine fragrance perfume", price:"$30", img:"perfume3.png"},
+  {name:"Perfume Musk", desc:"Musk fragrance perfume", price:"$27", img:"perfume4.png"},
+  {name:"Perfume Citrus", desc:"Citrus scent perfume", price:"$26", img:"perfume5.png"},
+  {name:"Foundation Light", desc:"Light beige foundation", price:"$18", img:"foundation1.png"},
+  {name:"Foundation Medium", desc:"Medium beige foundation", price:"$18", img:"foundation2.png"},
+  {name:"Foundation Dark", desc:"Dark beige foundation", price:"$18", img:"foundation3.png"},
+  {name:"Foundation Golden", desc:"Golden foundation", price:"$20", img:"foundation4.png"},
+  {name:"Foundation Natural", desc:"Natural shade foundation", price:"$19", img:"foundation5.png"}
+];
+
+let cart = [];
+
+function renderBeautyProducts(){
+  const grid = document.getElementById("beautyGrid");
+  beautyProducts.forEach((p,i)=>{
+    const div = document.createElement("div");
+    div.className="product";
+    div.innerHTML = `<img src="${p.img}" alt="${p.name}">
+                     <div><strong>${p.name}</strong></div>
+                     <div>${p.desc}</div>
+                     <div>${p.price}</div>
+                     <button onclick="addToCart(${i}, event)">Add to Cart</button>`;
+    grid.appendChild(div);
+  });
+}
+renderBeautyProducts();
+
+// Cart functions
+function addToCart(index,e){
+  e.stopPropagation();
+  cart.push(beautyProducts[index]);
+  updateCart();
+  alert(beautyProducts[index].name + " added to cart");
+}
+
+function updateCart(){
+  const cartItems = document.getElementById("cartItems");
+  cartItems.innerHTML="";
+  cart.forEach((item,i)=>{
+    const div = document.createElement("div");
+    div.textContent = item.name+" - "+item.price;
+    cartItems.appendChild(div);
+  });
+}
+
+function toggleCart(){
+  const c = document.getElementById("cart");
+  c.style.display = c.style.display==="none"?"block":"none";
+}
+
+function showCheckout(){
+  document.getElementById("checkoutForm").style.display="flex";
+}
+
+function submitOrder(){
+  const name=document.getElementById("customerName").value;
+  const id=document.getElementById("customerID").value;
+  if(!name||!id){ alert("Please provide your identity"); return;}
+  alert(`Order submitted!\nName: ${name}\nID: ${id}\nItems: ${cart.map(c=>c.name).join(", ")}`);
+  cart=[];
+  updateCart();
+  document.getElementById("checkoutForm").style.display="none";
+}
+</script>
+
+</body>
+</html>
