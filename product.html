@@ -125,20 +125,13 @@ h2 {
 
 <h2>Beauty Box Co - Products</h2>
 
-<!-- PRODUCT GRID -->
+<!-- PRODUCT GRID: ONLY ONE IMAGE PER CATEGORY -->
 <div class="grid">
   <!-- Lipgloss -->
-  <div class="product" onclick="openViewer('lipgloss',0)"><img src="lipgloss1.png" alt="Lipgloss 1"></div>
-  <div class="product" onclick="openViewer('lipgloss',1)"><img src="lipgloss2.png" alt="Lipgloss 2"></div>
-  <div class="product" onclick="openViewer('lipgloss',2)"><img src="lipgloss3.png" alt="Lipgloss 3"></div>
-  <div class="product" onclick="openViewer('lipgloss',3)"><img src="lipgloss5.png" alt="Lipgloss 4"></div>
+  <div class="product" onclick="openViewer('lipgloss',0)"><img src="lipgloss1.png" alt="Lipgloss"></div>
 
   <!-- Perfume -->
-  <div class="product" onclick="openViewer('perfume',0)"><img src="perfume1.png" alt="Perfume 1"></div>
-  <div class="product" onclick="openViewer('perfume',1)"><img src="perfume2.png" alt="Perfume 2"></div>
-  <div class="product" onclick="openViewer('perfume',2)"><img src="perfume3.png" alt="Perfume 3"></div>
-  <div class="product" onclick="openViewer('perfume',3)"><img src="perfume4.png" alt="Perfume 4"></div>
-  <div class="product" onclick="openViewer('perfume',4)"><img src="perfume5.png" alt="Perfume 5"></div>
+  <div class="product" onclick="openViewer('perfume',0)"><img src="perfume1.png" alt="Perfume"></div>
 
   <!-- Foundation -->
   <div class="product" onclick="openViewer('foundation',0)"><img src="foundation1.png" alt="Foundation"></div>
@@ -157,7 +150,7 @@ h2 {
 const products = {
   lipgloss: ["lipgloss1.png","lipgloss2.png","lipgloss3.png","lipgloss5.png"],
   perfume: ["perfume1.png","perfume2.png","perfume3.png","perfume4.png","perfume5.png"],
-  foundation: ["foundation1.png"]
+  foundation: ["foundation1.png","foundation2.png","foundation3.png","foundation4.png","foundation5.png"]
 };
 
 let currentProduct = [];
