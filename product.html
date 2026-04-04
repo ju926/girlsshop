@@ -4,200 +4,219 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Beauty Box Co - Products</title>
-
 <style>
 body {
   margin:0;
-  font-family:'Segoe UI', sans-serif;
+  font-family:'Segoe UI',sans-serif;
   background:#fff0f5;
-  opacity:0;
-  transition: opacity 0.6s ease;
+  color:#000;
 }
 
-/* Fade in */
-body.fade-in {
-  opacity:1;
-}
-
-/* Header */
-header {
-  position: sticky;
-  top:0;
-  background:#fff;
-  z-index:100;
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  padding:10px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.1);
-}
-
-header button {
-  background:#ff1493;
-  color:#fff;
-  border:none;
-  margin:5px;
-  padding:10px 18px;
-  border-radius:25px;
-  cursor:pointer;
-  font-weight:600;
-  transition:0.3s;
-}
-
-header button.active,
-header button:hover {
-  background:#ff69b4;
-  transform:scale(1.05);
-}
-
-/* Pinterest masonry layout */
-.products {
-  column-count: 2;
-  column-gap: 15px;
-  padding:15px;
-}
-
-@media(min-width:600px){
-  .products { column-count:3; }
-}
-@media(min-width:900px){
-  .products { column-count:4; }
-}
-
-/* Product card */
-.product-card {
-  background:#fff;
-  border-radius:20px;
-  margin-bottom:15px;
-  display:inline-block;
-  width:100%;
-  box-shadow:0 4px 15px rgba(0,0,0,0.1);
-  overflow:hidden;
-  transition:0.3s;
-}
-
-.product-card:hover {
-  transform: translateY(-8px);
-  box-shadow:0 8px 25px rgba(0,0,0,0.2);
-}
-
-/* Images */
-.product-card img {
-  width:100%;
-  border-radius:20px 20px 0 0;
-}
-
-/* Multi-image thumbnails */
-.thumbnails {
-  display:flex;
-  gap:5px;
-  padding:5px;
-  justify-content:center;
-}
-
-.thumbnails img {
-  width:40px;
-  height:40px;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-.name {
-  text-align:center;
-  font-weight:600;
-  padding:5px;
-}
-
-.price {
+/* HEADER */
+h2 {
   text-align:center;
   color:#ff1493;
-  font-weight:bold;
-  padding-bottom:10px;
+  margin-top:20px;
+  font-size:2rem;
+  font-weight:700;
+}
+
+/* PRODUCT GRID */
+.grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fill,minmax(150px,1fr));
+  gap:20px;
+  padding:30px;
+}
+
+.product {
+  cursor:pointer;
+  text-align:center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius:15px;
+}
+
+.product img {
+  width:100%;
+  border-radius:15px;
+  box-shadow:0 4px 15px rgba(255,20,147,0.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product:hover img {
+  transform:scale(1.05);
+  box-shadow:0 8px 25px rgba(255,20,147,0.6);
+}
+
+/* FULLSCREEN MODAL */
+#viewer {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.95);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
+  overflow:hidden;
+}
+
+#viewer img {
+  max-width:90%;
+  max-height:90%;
+  transition:transform 0.3s, box-shadow 0.3s;
+  border-radius:15px;
+}
+
+#viewer img:hover {
+  box-shadow:0 0 30px #ff69b4;
+}
+
+/* ZOOM */
+.zoomed {
+  transform:scale(1.8);
+}
+
+/* ARROWS */
+.arrow {
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:48px;
+  color:white;
+  cursor:pointer;
+  user-select:none;
+  padding:10px;
+}
+
+.arrow-left {
+  left:10px;
+}
+
+.arrow-right {
+  right:10px;
+}
+
+/* CLOSE BUTTON */
+#closeBtn {
+  position:absolute;
+  top:20px;
+  right:20px;
+  font-size:36px;
+  color:white;
+  cursor:pointer;
+  user-select:none;
+}
+
+/* CAPTION */
+#caption {
+  position:absolute;
+  bottom:20px;
+  color:white;
+  font-size:18px;
+  text-align:center;
+  width:100%;
 }
 </style>
 </head>
-
 <body>
 
-<!-- Categories -->
-<header>
-  <button class="category-btn active" data-category="all">All</button>
-  <button class="category-btn" data-category="beauty">Beauty</button>
-  <button class="category-btn" data-category="hair">Hair</button>
-  <button class="category-btn" data-category="body">Body</button>
-  <button class="category-btn" data-category="fitness">Fitness</button>
-  <button class="category-btn" data-category="accessories">Accessories</button>
-</header>
+<h2>Beauty Box Co - Products</h2>
 
-<!-- Products -->
-<section class="products">
-
-  <!-- Lip Gloss (multi images) -->
-  <div class="product-card" data-category="beauty">
-    <img src="lipgloss1.png" class="main-img">
-    <div class="thumbnails">
-      <img src="lipgloss1.png">
-      <img src="lipgloss2.png">
-      <img src="lipgloss3.png">
-      <img src="lipgloss5.png">
-    </div>
-    <div class="name">Lip Gloss</div>
-    <div class="price">$18</div>
-  </div>
-
-  <!-- Foundation -->
-  <div class="product-card" data-category="beauty">
-    <img src="foundation1.png">
-    <div class="name">Foundation</div>
-    <div class="price">$30</div>
-  </div>
+<!-- PRODUCT GRID -->
+<div class="grid">
+  <!-- Lipgloss -->
+  <div class="product" onclick="openViewer('lipgloss',0)"><img src="lipgloss1.png" alt="Lipgloss 1"></div>
+  <div class="product" onclick="openViewer('lipgloss',1)"><img src="lipgloss2.png" alt="Lipgloss 2"></div>
+  <div class="product" onclick="openViewer('lipgloss',2)"><img src="lipgloss3.png" alt="Lipgloss 3"></div>
+  <div class="product" onclick="openViewer('lipgloss',3)"><img src="lipgloss5.png" alt="Lipgloss 4"></div>
 
   <!-- Perfume -->
-  <div class="product-card" data-category="beauty">
-    <img src="perfume1.png">
-    <div class="name">Perfume</div>
-    <div class="price">$45</div>
-  </div>
+  <div class="product" onclick="openViewer('perfume',0)"><img src="perfume1.png" alt="Perfume 1"></div>
+  <div class="product" onclick="openViewer('perfume',1)"><img src="perfume2.png" alt="Perfume 2"></div>
+  <div class="product" onclick="openViewer('perfume',2)"><img src="perfume3.png" alt="Perfume 3"></div>
+  <div class="product" onclick="openViewer('perfume',3)"><img src="perfume4.png" alt="Perfume 4"></div>
+  <div class="product" onclick="openViewer('perfume',4)"><img src="perfume5.png" alt="Perfume 5"></div>
 
-</section>
+  <!-- Foundation -->
+  <div class="product" onclick="openViewer('foundation',0)"><img src="foundation1.png" alt="Foundation"></div>
+</div>
+
+<!-- FULLSCREEN MODAL -->
+<div id="viewer">
+  <div id="closeBtn" onclick="closeViewer()">&times;</div>
+  <div class="arrow arrow-left" onclick="prevImage(event)">&#10094;</div>
+  <img id="viewerImg" onclick="toggleZoom(event)">
+  <div class="arrow arrow-right" onclick="nextImage(event)">&#10095;</div>
+  <div id="caption"></div>
+</div>
 
 <script>
-/* Fade in */
-window.onload = () => {
-  document.body.classList.add("fade-in");
+const products = {
+  lipgloss: ["lipgloss1.png","lipgloss2.png","lipgloss3.png","lipgloss5.png"],
+  perfume: ["perfume1.png","perfume2.png","perfume3.png","perfume4.png","perfume5.png"],
+  foundation: ["foundation1.png"]
 };
 
-/* Category filter */
-const btns = document.querySelectorAll(".category-btn");
-const cards = document.querySelectorAll(".product-card");
+let currentProduct = [];
+let currentIndex = 0;
 
-btns.forEach(btn => {
-  btn.addEventListener("click", () => {
-    btns.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
+function openViewer(product, index){
+  currentProduct = products[product];
+  currentIndex = index;
+  document.getElementById("viewer").style.display = "flex";
+  const img = document.getElementById("viewerImg");
+  img.src = currentProduct[currentIndex];
+  img.classList.remove("zoomed");
+  document.getElementById("caption").textContent = product.charAt(0).toUpperCase() + product.slice(1) + " " + (currentIndex+1);
+}
 
-    const cat = btn.dataset.category;
+function closeViewer(){
+  document.getElementById("viewer").style.display = "none";
+  document.getElementById("viewerImg").classList.remove("zoomed");
+}
 
-    cards.forEach(card => {
-      if(cat === "all" || card.dataset.category === cat){
-        card.style.display = "inline-block";
-      } else {
-        card.style.display = "none";
-      }
-    });
-  });
-});
+document.getElementById("viewerImg").onclick = function(e){ e.stopPropagation(); };
+document.getElementById("viewer").onclick = function(){ closeViewer(); };
 
-/* Thumbnail switch */
-document.querySelectorAll(".product-card").forEach(card => {
-  const main = card.querySelector(".main-img");
-  const thumbs = card.querySelectorAll(".thumbnails img");
+function toggleZoom(e){
+  e.stopPropagation();
+  e.target.classList.toggle("zoomed");
+}
 
-  thumbs.forEach(t => {
-    t.addEventListener("click", () => {
-      main.src = t.src;
-    });
-  });
+function prevImage(e){
+  e.stopPropagation();
+  currentIndex = (currentIndex - 1 + currentProduct.length) % currentProduct.length;
+  const img = document.getElementById("viewerImg");
+  img.src = currentProduct[currentIndex];
+  img.classList.remove("zoomed");
+  document.getElementById("caption").textContent = getCaption();
+}
+
+function nextImage(e){
+  e.stopPropagation();
+  currentIndex = (currentIndex + 1) % currentProduct.length;
+  const img = document.getElementById("viewerImg");
+  img.src = currentProduct[currentIndex];
+  img.classList.remove("zoomed");
+  document.getElementById("caption").textContent = getCaption();
+}
+
+function getCaption(){
+  return document.getElementById("caption").textContent = 
+    document.getElementById("viewerImg").alt || "" + (currentIndex+1);
+}
+
+// Swipe support for mobile
+let startX = 0;
+const viewerImg = document.getElementById("viewerImg");
+viewerImg.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+viewerImg.addEventListener("touchend", e => {
+  let endX = e.changedTouches[0].clientX;
+  if (endX - startX > 50) prevImage(event);
+  if (startX - endX > 50) nextImage(event);
 });
 </script>
 
