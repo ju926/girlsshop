@@ -12,6 +12,7 @@ body {
   color:#000;
 }
 
+/* HEADER */
 h2 {
   text-align:center;
   color:#ff1493;
@@ -20,7 +21,7 @@ h2 {
   font-weight:700;
 }
 
-/* GRID */
+/* PRODUCT GRID */
 .grid {
   display:grid;
   grid-template-columns: repeat(auto-fill,minmax(150px,1fr));
@@ -47,56 +48,58 @@ h2 {
   box-shadow:0 8px 25px rgba(255,20,147,0.6);
 }
 
-/* MODAL */
+/* FULLSCREEN MODAL */
 #viewer {
   position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
   background:rgba(0,0,0,0.95);
   display:none;
-  z-index:999;
-  overflow:hidden;
-  display:flex;
   justify-content:center;
   align-items:center;
+  z-index:999;
+  overflow:hidden;
 }
 
-.carousel-container {
-  display:flex;
-  gap:20px;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  padding:50px;
-}
-
-.carousel-item {
-  min-width:80%;
-  flex-shrink:0;
-  scroll-snap-align:center;
-  text-align:center;
-  position:relative;
+#viewer img {
+  max-width:90%;
+  max-height:90%;
+  transition:transform 0.3s, box-shadow 0.3s;
   border-radius:15px;
 }
 
-.carousel-item img {
-  width:100%;
-  border-radius:15px;
-  transition: transform 0.3s;
-}
-
-.carousel-item:hover img {
-  transform:scale(1.05);
+#viewer img:hover {
   box-shadow:0 0 30px #ff69b4;
 }
 
-/* Info overlay */
-.product-info {
-  margin-top:10px;
-  font-size:16px;
-  color:white;
+/* ZOOM */
+.zoomed {
+  transform:scale(1.8);
 }
 
-/* Close button */
+/* ARROWS */
+.arrow {
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:48px;
+  color:white;
+  cursor:pointer;
+  user-select:none;
+  padding:10px;
+}
+
+.arrow-left {
+  left:10px;
+}
+
+.arrow-right {
+  right:10px;
+}
+
+/* CLOSE BUTTON */
 #closeBtn {
   position:absolute;
   top:20px;
@@ -106,92 +109,109 @@ h2 {
   cursor:pointer;
   user-select:none;
 }
+
+/* CAPTION */
+#caption {
+  position:absolute;
+  bottom:20px;
+  color:white;
+  font-size:18px;
+  text-align:center;
+  width:100%;
+}
 </style>
 </head>
 <body>
 
 <h2>Beauty Box Co - Products</h2>
 
+<!-- PRODUCT GRID: ONLY ONE IMAGE PER CATEGORY -->
 <div class="grid">
-  <div class="product" onclick="openViewer('lipgloss')"><img src="lipgloss1.png" alt="Lipgloss"></div>
-  <div class="product" onclick="openViewer('perfume')"><img src="perfume1.png" alt="Perfume"></div>
-  <div class="product" onclick="openViewer('foundation')"><img src="foundation1.png" alt="Foundation"></div>
+  <!-- Lipgloss -->
+  <div class="product" onclick="openViewer('lipgloss',0)"><img src="lipgloss1.png" alt="Lipgloss"></div>
+
+  <!-- Perfume -->
+  <div class="product" onclick="openViewer('perfume',0)"><img src="perfume1.png" alt="Perfume"></div>
+
+  <!-- Foundation -->
+  <div class="product" onclick="openViewer('foundation',0)"><img src="foundation1.png" alt="Foundation"></div>
 </div>
 
+<!-- FULLSCREEN MODAL -->
 <div id="viewer">
   <div id="closeBtn" onclick="closeViewer()">&times;</div>
-  <div class="carousel-container" id="carousel"></div>
+  <div class="arrow arrow-left" onclick="prevImage(event)">&#10094;</div>
+  <img id="viewerImg" onclick="toggleZoom(event)">
+  <div class="arrow arrow-right" onclick="nextImage(event)">&#10095;</div>
+  <div id="caption"></div>
 </div>
 
 <script>
 const products = {
-  lipgloss: [
-    {src:"lipgloss1.png", desc:"Pink Shine Lipgloss", price:"$10"},
-    {src:"lipgloss2.png", desc:"Red Velvet Lipgloss", price:"$12"},
-    {src:"lipgloss3.png", desc:"Nude Gloss", price:"$11"},
-    {src:"lipgloss5.png", desc:"Sparkle Lipgloss", price:"$13"}
-  ],
-  perfume: [
-    {src:"perfume1.png", desc:"Rose Perfume", price:"$25"},
-    {src:"perfume2.png", desc:"Vanilla Perfume", price:"$28"},
-    {src:"perfume3.png", desc:"Jasmine Perfume", price:"$30"},
-    {src:"perfume4.png", desc:"Musk Perfume", price:"$27"},
-    {src:"perfume5.png", desc:"Citrus Perfume", price:"$26"}
-  ],
-  foundation: [
-    {src:"foundation1.png", desc:"Light Beige Foundation", price:"$18"},
-    {src:"foundation2.png", desc:"Medium Beige Foundation", price:"$18"},
-    {src:"foundation3.png", desc:"Dark Beige Foundation", price:"$18"},
-    {src:"foundation4.png", desc:"Golden Foundation", price:"$20"},
-    {src:"foundation5.png", desc:"Natural Foundation", price:"$19"}
-  ]
+  lipgloss: ["lipgloss1.png","lipgloss2.png","lipgloss3.png","lipgloss5.png"],
+  perfume: ["perfume1.png","perfume2.png","perfume3.png","perfume4.png","perfume5.png"],
+  foundation: ["foundation1.png","foundation2.png","foundation3.png","foundation4.png","foundation5.png"]
 };
 
-let autoScrollInterval;
+let currentProduct = [];
+let currentIndex = 0;
 
-function openViewer(category){
-  const container = document.getElementById('carousel');
-  container.innerHTML = '';
-  products[category].forEach(product => {
-    const item = document.createElement('div');
-    item.className = 'carousel-item';
-    item.innerHTML = `<img src="${product.src}" alt="${product.desc}">
-                      <div class="product-info">${product.desc} - ${product.price}</div>`;
-    container.appendChild(item);
-  });
-  document.getElementById('viewer').style.display='flex';
-
-  // Auto-scroll slowly
-  let scrollPos = 0;
-  clearInterval(autoScrollInterval);
-  autoScrollInterval = setInterval(()=>{
-    scrollPos += 1;
-    if(scrollPos > container.scrollWidth - container.clientWidth){
-      scrollPos = 0; // loop back
-    }
-    container.scrollTo({left:scrollPos, behavior:'smooth'});
-  }, 50); // adjust for speed
+function openViewer(product, index){
+  currentProduct = products[product];
+  currentIndex = index;
+  document.getElementById("viewer").style.display = "flex";
+  const img = document.getElementById("viewerImg");
+  img.src = currentProduct[currentIndex];
+  img.classList.remove("zoomed");
+  document.getElementById("caption").textContent = product.charAt(0).toUpperCase() + product.slice(1) + " " + (currentIndex+1);
 }
 
 function closeViewer(){
-  clearInterval(autoScrollInterval);
-  document.getElementById('viewer').style.display='none';
+  document.getElementById("viewer").style.display = "none";
+  document.getElementById("viewerImg").classList.remove("zoomed");
 }
 
-// Allow manual scroll
-const container = document.getElementById('carousel');
-container.addEventListener('wheel', e => { 
-  e.preventDefault();
-  container.scrollLeft += e.deltaY;
-});
-container.addEventListener('touchstart', e => {
-  startX = e.touches[0].clientX;
-});
-container.addEventListener('touchmove', e => {
-  let dx = startX - e.touches[0].clientX;
-  container.scrollLeft += dx;
-  startX = e.touches[0].clientX;
+document.getElementById("viewerImg").onclick = function(e){ e.stopPropagation(); };
+document.getElementById("viewer").onclick = function(){ closeViewer(); };
+
+function toggleZoom(e){
+  e.stopPropagation();
+  e.target.classList.toggle("zoomed");
+}
+
+function prevImage(e){
+  e.stopPropagation();
+  currentIndex = (currentIndex - 1 + currentProduct.length) % currentProduct.length;
+  const img = document.getElementById("viewerImg");
+  img.src = currentProduct[currentIndex];
+  img.classList.remove("zoomed");
+  document.getElementById("caption").textContent = getCaption();
+}
+
+function nextImage(e){
+  e.stopPropagation();
+  currentIndex = (currentIndex + 1) % currentProduct.length;
+  const img = document.getElementById("viewerImg");
+  img.src = currentProduct[currentIndex];
+  img.classList.remove("zoomed");
+  document.getElementById("caption").textContent = getCaption();
+}
+
+function getCaption(){
+  return document.getElementById("caption").textContent = 
+    document.getElementById("viewerImg").alt || "" + (currentIndex+1);
+}
+
+// Swipe support for mobile
+let startX = 0;
+const viewerImg = document.getElementById("viewerImg");
+viewerImg.addEventListener("touchstart", e => startX = e.touches[0].clientX);
+viewerImg.addEventListener("touchend", e => {
+  let endX = e.changedTouches[0].clientX;
+  if (endX - startX > 50) prevImage(event);
+  if (startX - endX > 50) nextImage(event);
 });
 </script>
+
 </body>
 </html>
